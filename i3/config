@@ -1,0 +1,197 @@
+# font for window titles and bar
+font pango:Fira Code Nerd Font 9
+
+# use win key
+set $mod Mod4
+
+# define names for workspaces
+set $ws1    "1:   Terminal "
+set $ws2    "2:   Code "
+set $ws3    "3:   Zen "
+set $ws4    "4:   Files "
+set $ws5    "5:   Documents "
+#set $ws6    "6:   Media "
+#set $ws7    "7:   Design "
+#set $ws8    "8:   Chat "
+#set $ws9    "9:   General "
+#set $ws10   "10:   Settings "
+
+# use $mod+Mouse to drag floating windows to their wanted position
+floating_modifier $mod 
+
+# control focused window when follows the mouse movements
+focus_follows_mouse yes
+
+# window border settings
+default_border          none
+default_floating_border none
+
+# hiding borders adjacent to the screen edges
+hide_edge_borders none
+
+# window gaps
+smart_gaps off
+gaps inner 6
+gaps outer 3
+
+# start terminal
+bindsym $mod+Return exec --no-startup-id alacritty
+
+# start a program launcher
+bindsym $mod+d exec --no-startup-id rofi -show drun -run-command "i3-msg exec '{cmd}'"
+
+# switching window with win+tab
+bindsym $mod+Tab exec --no-startup-id rofi -show window
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# change focus
+bindsym $mod+h  focus left
+bindsym $mod+j  focus down
+bindsym $mod+k    focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left   focus left
+bindsym $mod+Down   focus down
+bindsym $mod+Up     focus up
+bindsym $mod+Right  focus right
+
+# move focused window
+bindsym $mod+Shift+h    move left
+bindsym $mod+Shift+j    move down
+bindsym $mod+Shift+k      move up
+bindsym $mod+Shift+l   move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left     move left
+bindsym $mod+Shift+Down     move down
+bindsym $mod+Shift+Up       move up
+bindsym $mod+Shift+Right    move right
+
+# split in horizontal orientation
+bindsym $mod+- split h
+
+# split in vertical orientation
+bindsym $mod+\ split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+Shift+a focus child
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# show the next scratchpad window or hide the focused scratchpad window
+bindsym $mod+minus scratchpad show
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# for screenshoting
+bindsym Print exec flameshot gui
+
+# Enable touchpad gestures
+exec_always --no-startup-id xinput set-prop "SYNA2BA6:00 06CB:CE2D Touchpad" "libinput Tapping Enabled" 1
+exec_always --no-startup-id xinput set-prop "SYNA2BA6:00 06CB:CE2D Touchpad" "libinput Natural Scrolling Enabled" 1
+#exec --no-startup-id libinput-gestures-setup start
+#exec --no-startup-id libinput-gestures
+
+# Special keys to adjust volume via PulseAudio
+bindsym XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
+bindsym XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+
+# Special keys to adjust brightness via brightnessctl
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
+
+# notification
+bindsym Ctrl+space              exec --no-startup-id dunstctl close
+bindsym Ctrl+Shift+space        exec --no-startup-id dunstctl close-all
+bindsym Ctrl+grave              exec --no-startup-id dunstctl history-pop
+bindsym Ctrl+Shift+period       exec --no-startup-id dunstctl context
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace
+bindsym $mod+Shift+r restart
+
+# Exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes' 'i3-msg exit'"
+
+# resize window
+bindsym $mod+r mode "  "
+mode "  " {
+    # pressing left and up will shrink the window's width and height
+    # pressing right and down will grow the window's width and height
+    bindsym $left   resize shrink width 10 px or 10 ppt
+    bindsym $down   resize grow height 10 px or 10 ppt
+    bindsym $up     resize shrink height 10 px or 10 ppt
+    bindsym $right  resize grow width 10 px or 10 ppt
+
+    # same bindings, but for the arrow keys
+    bindsym Left    resize shrink width 10 px or 10 ppt
+    bindsym Down    resize grow height 10 px or 10 ppt
+    bindsym Up      resize shrink height 10 px or 10 ppt
+    bindsym Right   resize grow width 10 px or 10 ppt
+
+    # back to normal: Enter or win+r
+    bindsym Return mode "default"
+    bindsym $mod+r mode "default"
+}
+
+# bar {
+#     status_command i3blocks
+#     position top
+#     workspace_buttons yes
+# }
+
+exec_always --no-startup-id picom --backend glx
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec_always --no-startup-id nm-applet
+exec_always --no-startup-id feh --bg-fill ~/Pictures/back.jpg
+
+exec_always --no-startup-id volumeicon
+exec_always --no-startup-id blueman-applet
+for_window [class="Zenity"] floating enable, border pixel 2, sticky enable, move position mouse, resize set 500 500
